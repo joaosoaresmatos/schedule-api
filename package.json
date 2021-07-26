@@ -1,0 +1,33 @@
+{
+  "name": "schedule-api",
+  "version": "1.0.0",
+  "description": "schedule-api",
+  "main": "input-functions-v10.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaosoaresmatos/schedule-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joaosoaresmatos/schedule-api/issues"
+  },
+  "homepage": "https://github.com/joaosoaresmatos/schedule-api#readme",
+  "dependencies": {
+    "chai": "^4.3.4",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.21",
+    "mocha": "^9.0.2",
+    "moment": "^2.29.1",
+    "mysql": "^2.18.1"
+  }
+}
