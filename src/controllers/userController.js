@@ -4,3 +4,4 @@ module.exports = {
         return res.json({ hello: 'word' });F
     }
 }
+    const { User } = require('./app/models');
