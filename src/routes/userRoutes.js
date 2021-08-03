@@ -1,22 +1,12 @@
 const routes = require('express').Router();
 
-const departmentController = require('../controllers/departmentController');
+const userController = require('../controllers/userController');
 
-const { User } = require('../models');
+routes.post('/register', userController.register);
 
-routes.post('/register', async (req, res) => {
-    const user = await User.create(req.body);
-    res.json(user);
-});
+routes.get('/find/:email', userController.findByEmail);
 
-routes.get('/find/:id', (req, res) => {
-    res.json('Im in register');
-});
-
-routes.get('/findall', async (req, res) => {
-    const user = await User.findAll();
-    res.json(user);
-});
+routes.get('/findall',userController.findAll);
 
 routes.put('/update/:id', (req, res) => {
     res.json('Im in update');
