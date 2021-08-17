@@ -6,14 +6,10 @@ routes.post('/register', userController.register);
 
 routes.get('/find/:email', userController.findByEmail);
 
-routes.get('/findall',userController.findAll);
+routes.get('/findAll', userController.findAll);
 
-routes.put('/update/:id', (req, res) => {
-    res.json('Im in update');
-});
+routes.patch('/update/:id', userController.updateById);
 
-routes.delete('/delete/:id', (req, res) => {
-    res.json('Im in delete');
-});
+routes.delete('/delete/:id', userController.deleteById);
 
 module.exports = routes;

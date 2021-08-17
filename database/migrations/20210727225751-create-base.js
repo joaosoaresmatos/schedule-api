@@ -1,207 +1,207 @@
 'use strict';
 
 module.exports = {
-    up: async (queryInterface, Sequelize) => {
+    up: async (queryInterface, DataTypes) => {
         /**
          * Add altering commands here.
          *
          * Example:
          * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
          */
-        await queryInterface.createTable('department', {
+        await queryInterface.createTable('departments', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: DataTypes.INTEGER
             },
             name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
             createdAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             deletedAt: {
                 allowNull: true,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             }
         });
 
-        await queryInterface.createTable('userType', {
+        await queryInterface.createTable('userTypes', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: DataTypes.INTEGER
             },
             name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
             createdAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             deletedAt: {
                 allowNull: true,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             }
         });
 
-        await queryInterface.createTable('user', {
+        await queryInterface.createTable('users', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: DataTypes.INTEGER
             },
             departmentId: {
-                type: Sequelize.INTEGER,
-                references: { model: 'department', key: 'id' }
+                type: DataTypes.INTEGER,
+                references: { model: 'departments', key: 'id' }
             },
             userTypeId: {
-                type: Sequelize.INTEGER,
-                references: { model: 'userType', key: 'id' }
+                type: DataTypes.INTEGER,
+                references: { model: 'userTypes', key: 'id' }
             },
             name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
             email: {
                 allowNull: false,
-                type: Sequelize.STRING,
+                type: DataTypes.STRING,
                 unique: true
             },
             password: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
             createdAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             deletedAt: {
                 allowNull: true,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             }
         });
 
-        await queryInterface.createTable('resourceType', {
+        await queryInterface.createTable('resourceTypes', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: DataTypes.INTEGER
             },
             name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
             createdAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             deletedAt: {
                 allowNull: true,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             }
         });
 
-        await queryInterface.createTable('resource', {
+        await queryInterface.createTable('resources', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: DataTypes.INTEGER
             },
             departmentId: {
-                type: Sequelize.INTEGER,
-                references: { model: 'department', key: 'id' }
+                type: DataTypes.INTEGER,
+                references: { model: 'departments', key: 'id' }
             },
             resourceTypeId: {
-                type: Sequelize.INTEGER,
-                references: { model: 'resourceType', key: 'id' }
+                type: DataTypes.INTEGER,
+                references: { model: 'resourceTypes', key: 'id' }
             },
             name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
             description: {
                 allowNull: true,
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
             createdAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             deletedAt: {
                 allowNull: true,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             }
         });
 
-        await queryInterface.createTable('schedule', {
+        await queryInterface.createTable('schedules', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: DataTypes.INTEGER
             },
             resourceId: {
                 primaryKey: true,
-                type: Sequelize.INTEGER,
-                references: { model: 'resource', key: 'id' }
+                type: DataTypes.INTEGER,
+                references: { model: 'resources', key: 'id' }
             },
             userId: {
                 primaryKey: true,
-                type: Sequelize.INTEGER,
-                references: { model: 'user', key: 'id' }
+                type: DataTypes.INTEGER,
+                references: { model: 'users', key: 'id' }
             },
             description: {
                 allowNull: true,
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
             start: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             end: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             createdAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             deletedAt: {
                 allowNull: true,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             }
         });
     },
@@ -213,11 +213,11 @@ module.exports = {
          * Example:
          * await queryInterface.dropTable('users');
          */
-        await queryInterface.dropTable('schedule');
-        await queryInterface.dropTable('resource');
-        await queryInterface.dropTable('resourceType');
-        await queryInterface.dropTable('user');
-        await queryInterface.dropTable('userType');
-        await queryInterface.dropTable('department');
+        await queryInterface.dropTable('schedules');
+        await queryInterface.dropTable('resources');
+        await queryInterface.dropTable('resourceTypes');
+        await queryInterface.dropTable('users');
+        await queryInterface.dropTable('userTypes');
+        await queryInterface.dropTable('departments');
     }
 };

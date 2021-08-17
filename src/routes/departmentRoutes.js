@@ -9,7 +9,8 @@ const departmentController = require('../controllers/departmentController')
 // User routes
 // routes.post('/', UserController.store)
 // routes.put('/:id', UserController.update)
-routes.get('/', departmentController.getAll)
+routes.get('/', departmentController.findAll)
 // routes.delete('/:id', UserController.destroy)
 
+routes.post('/register', departmentController.register);
 module.exports = routes

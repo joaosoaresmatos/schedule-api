@@ -1,16 +1,40 @@
 const { User } = require('../models');
-
+const { Op, fn } = require('sequelize');
 module.exports = {
     async register(req, res) {
-        const user = await User.create(req.body);
-        res.json(user);
+        const userResponse = await User.create(req.body);
+        res.json(userResponse);
     },
     async findByEmail(req, res) {
-        const user = await User.findOne({ where: { email: req.params.email} });
+        const user = await User.findOne({
+            where: {
+                email: req.params.email,
+                deletedAt: {
+                    [Op.is]: null
+                }
+            }
+        });
         res.json(user);
     },
     async findAll(req, res) {
         const user = await User.findAll();
+        res.json(user);
+    },
+    async updateById(req, res) {
+        const user = await User.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        });
+        res.json(user);
+    },
+    //https://sequelize.org/master/manual/paranoid.html
+    async deleteById(req, res) {
+        const user = await User.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
         res.json(user);
     }
 };
