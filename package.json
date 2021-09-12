@@ -30,8 +30,11 @@
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
+    "openapi-types": "^9.1.0",
     "redis": "^3.1.2",
-    "sequelize": "^6.6.5"
+    "sequelize": "^6.6.5",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "sequelize-cli": "^6.2.0"

@@ -1,4 +1,4 @@
-const authService = require('../controllers/authService');
+const authService = require('../services/authService');
 
 module.exports = {
     async authToken(req, res) {},

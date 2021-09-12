@@ -1,4 +1,4 @@
-const authRepository = require('../controllers/authRepository');
+const authRepository = require('../repositories/authRepository');
 const random = require('../utils/randomUtil');
 
 const TOKEN_LENGTH = 6;
