@@ -24,8 +24,7 @@ module.exports = {
         }
 
         /**
-         * Validação através do YUP schema
-         * fim
+         * Fim Validação através do YUP schema
          */
 
         /**

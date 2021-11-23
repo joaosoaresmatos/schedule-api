@@ -12,8 +12,7 @@ module.exports = {
         }
     },
     async sendToken(req, res) {
-        const token = authService.createToken();
-        authService.sendTokenToEmail(token, req.body.email);
+        await authService.sendVerificationToken(req.body.email);
     },
 
     async login(req, res) {
@@ -43,6 +42,7 @@ module.exports = {
         }
 
         return res.status(200).json({
+            //Todo inserir no jwt
             user: {
                 name: userExist.name,
                 email: userExist.email

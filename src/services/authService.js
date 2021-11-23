@@ -9,7 +9,8 @@ module.exports = {
         const token = random.getRandomString(TOKEN_LENGTH, {
             isUpperCase: true
         });
-        emailService.sendTokenToEmail(token, email)
-        authRepository.saveToken(token, email);
+
+       await authRepository.saveToken(token, email);
+       await emailService.sendTokenToEmail(token, email)
     }
 };
