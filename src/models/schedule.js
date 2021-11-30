@@ -1,17 +1,17 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define(
-        'User',
+    const Schedule = sequelize.define(
+        'Schedule',
         {
-            name: DataTypes.STRING,
-            email: DataTypes.STRING,
-            password: DataTypes.STRING,
-            departmentId: DataTypes.INTEGER,
-            userTypeId: DataTypes.INTEGER
+            resourceId: DataTypes.INTEGER,
+            userId: DataTypes.INTEGER,
+            description: DataTypes.STRING,
+            start: DataTypes.DATE,
+            end: DataTypes.DATE
         },
         {
             sequelize,
             paranoid: true
         }
     );
-    return User;
+    return Schedule;
 };

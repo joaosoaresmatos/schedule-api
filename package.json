@@ -32,6 +32,7 @@
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
+    "nodemailer": "^6.7.1",
     "openapi-types": "^9.1.0",
     "redis": "^3.1.2",
     "sequelize": "^6.6.5",
