@@ -1,41 +1,41 @@
-const { User } = require('../models');
+const { ResourceType } = require('../models');
 const { Op, fn } = require('sequelize');
 module.exports = {
     async register(req, res) {
-        const userResponse = await User.create(req.body);
-        res.json(userResponse);
+        const resourceTypeResponse = await ResourceType.create(req.body);
+        res.json(resourceTypeResponse);
     },
-    async findByEmail(req, res) {
-        const user = await User.findOne({
+    async findById(req, res) {
+        const resourceType = await ResourceType.findOne({
             where: {
-                email: req.params.email,
+                id: req.params.id,
                 deletedAt: {
                     [Op.is]: null
                 }
             }
         });
-        res.json(user);
+        res.json(resourceType);
     },
     async findAll(req, res) {
-        const user = await User.findAll();
-        //res.status(200).send(user);
-        res.json(user);
+        const resourceType = await ResourceType.findAll();
+        //res.status(200).send(resourceType);
+        res.json(resourceType);
     },
     async updateById(req, res) {
-        const user = await User.update(req.body, {
+        const resourceType = await ResourceType.update(req.body, {
             where: {
                 id: req.params.id
             }
         });
-        res.json(user);
+        res.json(resourceType);
     },
     //https://sequelize.org/master/manual/paranoid.html
     async deleteById(req, res) {
-        const user = await User.destroy({
+        const resourceType = await ResourceType.destroy({
             where: {
                 id: req.params.id
             }
         });
-        res.json(user);
+        res.json(resourceType);
     }
 };

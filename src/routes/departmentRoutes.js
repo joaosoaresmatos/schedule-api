@@ -1,16 +1,16 @@
-const routes = require('express').Router()
-
-const departmentController = require('../controllers/departmentController')
+const routes = require('express').Router();
 //const AuthController = require('../app/controllers/AuthController')
 
-// Authentication routes
-//routes.post('/signin', AuthController.store)
-
-// User routes
-// routes.post('/', UserController.store)
-// routes.put('/:id', UserController.update)
-routes.get('/', departmentController.findAll)
-// routes.delete('/:id', UserController.destroy)
+const departmentController = require('../controllers/departmentController');
 
 routes.post('/register', departmentController.register);
-module.exports = routes
+
+routes.get('/', departmentController.findAll);
+
+routes.get('/find/:id', departmentController.findById);
+
+routes.patch('/update/:id', departmentController.updateById);
+
+routes.delete('/delete/:id', departmentController.deleteById);
+
+module.exports = routes;

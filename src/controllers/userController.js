@@ -2,13 +2,24 @@ const { User } = require('../models');
 const { Op, fn } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const yup = require('yup');
+
+const isUserRegistered = async (req) => {
+    let userExist = await User.findOne({
+        where: {
+            email: req.body.email,
+            deletedAt: {
+                [Op.is]: null
+            }
+        }
+    });
+    if (userExist) {
+        return true;
+    }
+};
+
 module.exports = {
     async register(req, res) {
-        /**
-         * Validação através do YUP schema
-         * Início
-         */
-        let schema = yup.object().shape({
+        const schema = yup.object().shape({
             name: yup.string().required(),
             email: yup.string().email().required(),
             password: yup.string().required(),
@@ -23,58 +34,22 @@ module.exports = {
             });
         }
 
-        /**
-         * Fim Validação através do YUP schema
-         */
-
-        /**
-         * Validação no banco de dados
-         * Verifica se o usuário existe
-         */
-
-        let userExist = await User.findOne({
-            where: {
-                email: req.body.email,
-                deletedAt: {
-                    [Op.is]: null
-                }
-            }
-        });
-        if (userExist) {
+        if (await isUserRegistered(req)) {
             return res.status(400).json({
                 error: true,
                 message: 'Este usuário já existe!'
             });
         }
 
-        /**
-         * Desestrutuação dos dados da requisição
-         */
         const { name, email, password, userTypeId, departmentId } = req.body;
-
-        /**
-         * criação da constante data
-         */
-
         const data = { name, email, password, userTypeId, departmentId };
-
-        /**
-         * Criptografar a senha
-         */
-
         data.password = await bcrypt.hash(data.password, 8);
-
-        /**
-         * Inserção no banco de dados
-         */
 
         await User.create(data);
         return res.status(200).json({
             error: false,
             message: 'Usuário Cadastrado com sucesso'
         });
-        // const userResponse = await User.create(req.body);
-        // res.status(200).json(userResponse);
     },
 
     async findByEmail(req, res) {
@@ -94,13 +69,61 @@ module.exports = {
         res.json(user);
     },
     async updateById(req, res) {
-        const user = await User.update(req.body, {
+        const schema = yup.object().shape({
+            name: yup.string(),
+            password: yup.string(),
+            departmentId: yup.number(),
+            userTypeId: yup.number()
+        });
+
+        if (!(await schema.isValid(req.body))) {
+            return res.status(400).json({
+                error: true,
+                message: 'Dados inválidos'
+            });
+        }
+
+        const user = await User.findOne({
+            where: {
+                id: req.params.id,
+                deletedAt: {
+                    [Op.is]: null
+                }
+            }
+        });
+        if (user == null) {
+            return res.status(400).json({
+                error: true,
+                message: 'Usuário não encontrado'
+            });
+        }
+
+        const { name, password, userTypeId, departmentId } = req.body;
+        const data = {};
+        if (name) {
+            data.name = name;
+        }
+        if (userTypeId) {
+            data.userTypeId;
+        }
+        if (departmentId) {
+            data.departmentId;
+        }
+        if (password) {
+            data.password = await bcrypt.hash(password, 8);
+        }
+
+        await User.update(data, {
             where: {
                 id: req.params.id
             }
         });
-        res.json(user);
+        return res.status(200).json({
+            error: false,
+            message: 'Usuário Atualizado com sucesso'
+        });
     },
+
     //https://sequelize.org/master/manual/paranoid.html
     async deleteById(req, res) {
         const user = await User.destroy({
@@ -109,5 +132,9 @@ module.exports = {
             }
         });
         res.json(user);
+    },
+    async teste(req, res) {
+        console.log('teste');
+        res.json({});
     }
 };

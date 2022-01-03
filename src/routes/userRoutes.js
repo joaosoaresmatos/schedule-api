@@ -45,7 +45,8 @@ const authMiddleware = require('../middlewares/authMiddleware');
  *         updatedAt: 2021-08-14T17:27:12.000Z
  *         deletedAt: null
  */
-routes.get('/', authMiddleware, userController.findAll);
+// routes.get('/', authMiddleware, userController.findAll);
+routes.get('/', userController.findAll);
 
 routes.get('/find/:email', userController.findByEmail);
 

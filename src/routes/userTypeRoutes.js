@@ -1,6 +1,15 @@
-const routes = require('express').Router()
+const routes = require('express').Router();
 
-const userTypeController = require('../controllers/userTypeController')
+const userTypeController = require('../controllers/userTypeController');
 
 routes.post('/register', userTypeController.register);
-module.exports = routes
+
+routes.get('/', userTypeController.findAll);
+
+routes.get('/find/:id', userTypeController.findById);
+
+routes.patch('/update/:id', userTypeController.updateById);
+
+routes.delete('/delete/:id', userTypeController.deleteById);
+
+module.exports = routes;

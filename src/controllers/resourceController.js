@@ -1,41 +1,63 @@
-const { User } = require('../models');
+const { Resource } = require('../models');
 const { Op, fn } = require('sequelize');
 module.exports = {
     async register(req, res) {
-        const userResponse = await User.create(req.body);
-        res.json(userResponse);
+        const resourceResponse = await Resource.create(req.body);
+        res.json(resourceResponse);
     },
-    async findByEmail(req, res) {
-        const user = await User.findOne({
+    async findById(req, res) {
+        const resource = await Resource.findOne({
             where: {
-                email: req.params.email,
+                id: req.params.id,
                 deletedAt: {
                     [Op.is]: null
                 }
             }
         });
-        res.json(user);
+        res.json(resource);
+    },
+    async findByDepartmentId(req, res) {
+        const resource = await Resource.findOne({
+            where: {
+                departmentId: req.params.departmentId,
+                deletedAt: {
+                    [Op.is]: null
+                }
+            }
+        });
+        res.json(resource);
+    },
+    async findByResourceTypeId(req, res) {
+        const resource = await Resource.findOne({
+            where: {
+                resourceTypeId: req.params.resourceTypeId,
+                deletedAt: {
+                    [Op.is]: null
+                }
+            }
+        });
+        res.json(resource);
     },
     async findAll(req, res) {
-        const user = await User.findAll();
-        //res.status(200).send(user);
-        res.json(user);
+        const resource = await Resource.findAll();
+        //res.status(200).send(resource);
+        res.json(resource);
     },
     async updateById(req, res) {
-        const user = await User.update(req.body, {
+        const resource = await Resource.update(req.body, {
             where: {
                 id: req.params.id
             }
         });
-        res.json(user);
+        res.json(resource);
     },
     //https://sequelize.org/master/manual/paranoid.html
     async deleteById(req, res) {
-        const user = await User.destroy({
+        const resource = await Resource.destroy({
             where: {
                 id: req.params.id
             }
         });
-        res.json(user);
+        res.json(resource);
     }
 };

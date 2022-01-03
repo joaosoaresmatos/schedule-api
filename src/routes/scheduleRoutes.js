@@ -1,15 +1,15 @@
 const routes = require('express').Router();
 
-const shceduleController = require('../controllers/scheduleController');
+const scheduleController = require('../controllers/scheduleController');
 
-routes.get('/:resourceId/:date', shceduleController.getAvaiable);
+routes.get('/:resourceId/:date', scheduleController.getAvailable);
 
-routes.get('/:userId', shceduleController.getByUserId);
+routes.get('/:userId', scheduleController.getByUserId);
 
-routes.post('/register', shceduleController.register);
+routes.post('/register', scheduleController.register);
 
-routes.patch('/update/:id', shceduleController.updateById);
+routes.patch('/update/:id', scheduleController.updateById);
 
-routes.delete('/delete/:id', shceduleController.deleteById);
+routes.delete('/delete/:id', scheduleController.deleteById);
 
 module.exports = routes;

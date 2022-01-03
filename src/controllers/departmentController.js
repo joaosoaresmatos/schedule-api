@@ -1,13 +1,41 @@
 const { Department } = require('../models');
-
+const { Op, fn } = require('sequelize');
 module.exports = {
-    async findAll(req, res) {
-        const department = await Department.findAll();
+    async register(req, res) {
+        const departmentResponse = await Department.create(req.body);
+        res.json(departmentResponse);
+    },
+    async findById(req, res) {
+        const department = await Department.findOne({
+            where: {
+                id: req.params.id,
+                deletedAt: {
+                    [Op.is]: null
+                }
+            }
+        });
         res.json(department);
     },
-    async register(req, res) {
-        console.log(req.body);
-        const userResponse = await Department.create(req.body);
-        res.json(userResponse);
+    async findAll(req, res) {
+        const department = await Department.findAll();
+        //res.status(200).send(department);
+        res.json(department);
+    },
+    async updateById(req, res) {
+        const department = await Department.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        });
+        res.json(department);
+    },
+    //https://sequelize.org/master/manual/paranoid.html
+    async deleteById(req, res) {
+        const department = await Department.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
+        res.json(department);
     }
 };

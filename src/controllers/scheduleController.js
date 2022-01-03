@@ -5,7 +5,7 @@ module.exports = {
         const scheduleResponse = await Schedule.create(req.body);
         res.json(scheduleResponse);
     },
-    async getAvaiable(req, res) {
+    async getAvailable(req, res) {
         const schedule = await Schedule.findOne({
             where: {
                 email: req.params.email,
