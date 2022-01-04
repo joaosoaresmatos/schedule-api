@@ -1,9 +1,20 @@
 const { Schedule } = require('../models');
 const { Op, fn } = require('sequelize');
+const { date } = require('yup/lib/locale');
 module.exports = {
     async register(req, res) {
-        const scheduleResponse = await Schedule.create(req.body);
-        res.json(scheduleResponse);
+        const { resourceId, userId, description, start, end } = req.body;
+        const data = { resourceId, userId, description };
+        data.start = new Date(start);
+        data.end = new Date(end);
+
+        console.log(data);
+
+        await Schedule.create(data);
+        return res.status(200).json({
+            error: false,
+            message: 'Recurso agendado com sucesso'
+        });
     },
     async getAvailable(req, res) {
         const schedule = await Schedule.findOne({

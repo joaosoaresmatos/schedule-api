@@ -1,17 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define(
-        'User',
+    const ResourceType = sequelize.define(
+        'ResourceType',
         {
-            name: DataTypes.STRING,
-            email: DataTypes.STRING,
-            password: DataTypes.STRING,
-            departmentId: DataTypes.INTEGER,
-            userTypeId: DataTypes.INTEGER
+            name: DataTypes.STRING
         },
         {
             sequelize,
             paranoid: true
         }
     );
-    return User;
+    return ResourceType;
 };
