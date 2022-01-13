@@ -38,8 +38,19 @@ module.exports = {
         });
         res.json(resource);
     },
-    async findAll(req, res) {
-        const resource = await Resource.findAll();
+    async find(req, res) {
+        const { id, departmentId, resourceTypeId } = req.query;
+        const where = {};
+        if (id) {
+            where.id = id;
+        }
+        if (departmentId) {
+            where.departmentId = departmentId;
+        }
+        if (resourceTypeId) {
+            where.resourceTypeId = resourceTypeId;
+        }
+        const resource = await Resource.findAll({ where });
         //res.status(200).send(resource);
         res.json(resource);
     },

@@ -16,8 +16,13 @@ module.exports = {
         });
         res.json(department);
     },
-    async findAll(req, res) {
-        const department = await Department.findAll();
+    async find(req, res) {
+        const { id } = req.query;
+        const where = {};
+        if (id) {
+            where.id = id;
+        }
+        const department = await Department.findAll({ where });
         //res.status(200).send(department);
         res.json(department);
     },

@@ -2,9 +2,9 @@ const routes = require('express').Router();
 
 const scheduleController = require('../controllers/scheduleController');
 
-routes.get('/:resourceId/:date', scheduleController.getAvailable);
+//routes.get('/:resourceId, scheduleController.getAvailable);
 
-routes.get('/:userId', scheduleController.getByUserId);
+routes.get('/', scheduleController.find);
 
 routes.post('/register', scheduleController.register);
 

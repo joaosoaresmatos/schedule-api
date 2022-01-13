@@ -4,7 +4,7 @@ const resourceTypeController = require('../controllers/resourceTypeController');
 
 routes.post('/register', resourceTypeController.register);
 
-routes.get('/', resourceTypeController.findAll);
+routes.get('/', resourceTypeController.find);
 
 routes.get('/find/:id', resourceTypeController.findById);
 

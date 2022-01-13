@@ -16,8 +16,13 @@ module.exports = {
         });
         res.json(resourceType);
     },
-    async findAll(req, res) {
-        const resourceType = await ResourceType.findAll();
+    async find(req, res) {
+        const { id } = req.query;
+        const where = {};
+        if (id) {
+            where.id = id;
+        }
+        const resourceType = await ResourceType.findAll({ where });
         //res.status(200).send(resourceType);
         res.json(resourceType);
     },

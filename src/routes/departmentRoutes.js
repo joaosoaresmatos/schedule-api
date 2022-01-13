@@ -5,7 +5,7 @@ const departmentController = require('../controllers/departmentController');
 
 routes.post('/register', departmentController.register);
 
-routes.get('/', departmentController.findAll);
+routes.get('/', departmentController.find);
 
 routes.get('/find/:id', departmentController.findById);
 
