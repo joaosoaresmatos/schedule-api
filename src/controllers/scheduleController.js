@@ -135,6 +135,13 @@ module.exports = {
                     }
                 }
             });
+
+            if (!userByEmail) {
+                return res.status(400).json({
+                    error: false,
+                    message: 'Email não encontrado'
+                });
+            }
             data.userId = userByEmail.id;
         }
 
