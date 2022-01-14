@@ -6,6 +6,11 @@ const scheduleController = require('../controllers/scheduleController');
 
 routes.get('/', scheduleController.find);
 
+routes.post(
+    '/findAvailableIntervals',
+    scheduleController.findAvailableIntervals
+);
+
 routes.post('/register', scheduleController.register);
 
 routes.patch('/update/:id', scheduleController.updateById);
