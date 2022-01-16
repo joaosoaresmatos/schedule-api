@@ -1,10 +1,13 @@
 const { Schedule } = require('../models');
 const { User } = require('../models');
+const { Resource } = require('../models');
 const { Op, fn } = require('sequelize');
 const yup = require('yup');
 
 // User.hasMany(Schedule);
 Schedule.belongsTo(User);
+Schedule.belongsTo(Resource);
+
 const year = 2000;
 const classHour = [
     {
@@ -66,7 +69,11 @@ const isConflictScheduleTime = (start, end, schedule) => {
     console.log(scheduleEndTime);
     console.log(startTime);
     console.log(endTime);
-    if (scheduleStart.getDate() == scheduleEnd.getDate()) {
+    if (
+        scheduleStart.getUTCDate() == scheduleEnd.getUTCDate() &&
+        scheduleStart.getUTCMonth() == scheduleEnd.getUTCMonth() &&
+        scheduleStart.getUTCFullYear() == scheduleEnd.getUTCFullYear()
+    ) {
         console.log('Aqui 1');
 
         if (
@@ -205,14 +212,24 @@ module.exports = {
             });
         }
         const { resourceId, date } = req.body;
+        const dateParsed = new Date(date);
+        const datePlusOneDay = new Date(dateParsed);
+
+        datePlusOneDay.setDate(datePlusOneDay.getDate() + 1);
+        console.log(datePlusOneDay);
         const where = {};
         where.resourceId = resourceId;
         where.start = {
-            [Op.gte]: date
+            [Op.gte]: dateParsed
+        };
+        where.end = {
+            [Op.lt]: datePlusOneDay
         };
 
         try {
             const schedule = await Schedule.findAll({ where });
+            console.log('####');
+            console.log(schedule);
 
             let availableIntervals = classHour.filter((item) => {
                 for (i = 0; i < schedule.length; i++) {
@@ -241,8 +258,10 @@ module.exports = {
         res.json(availableIntervals);
     },
     async find(req, res) {
-        const { id, resourceId, userId, start, end } = req.query;
+        const { id, email, resourceId, userId, start, end } = req.query;
         const where = {};
+        const whereUser = {};
+
         if (id) {
             where.id = id;
         }
@@ -251,6 +270,16 @@ module.exports = {
         }
         if (userId) {
             where.userId = userId;
+        } else if (email) {
+            const userByEmail = await User.findOne({
+                where: {
+                    email: email,
+                    deletedAt: {
+                        [Op.is]: null
+                    }
+                }
+            });
+            where.userId = userByEmail.id;
         }
         if (start) {
             where.start = {
@@ -262,7 +291,10 @@ module.exports = {
                 [Op.lte]: end
             };
         }
-        const schedule = await Schedule.findAll({ include: User, where });
+        const schedule = await Schedule.findAll({
+            include: [User, Resource],
+            where
+        });
         //res.status(200).send(user);
         res.json(schedule);
     },
